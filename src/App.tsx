@@ -16,24 +16,42 @@ import {
 } from "./App.style";
 
 function App() {
-
-  const [value , setValue] = useState("");  //numeros 
-  const [theme , setTheme] = useState(1);
+  const [value, setValue] = useState(""); //numeros
+  const [theme, setTheme] = useState(1);
   const [themeValue, setThemeValue] = useState("8%");
 
+  const  calc = () => {
+    if (value.length >= 5 &&  value.slice(-1)  !== " ") {
+      setValue(eval(value).toString());
+    }
+  }
+
+  const deleteValue = () => {
+    if (value.slice(-1) === " ") {
+      setValue(value.substring(0, value.length - 3));
+    } else if (value.slice(-2) === "0.") {
+      setValue(value.substring(0, value.length - 2));
+    } else {
+      setValue(value.substring(0, value.length - 1));
+    }
+  };
 
   const handleTheme = () => {
-    if(theme === 1) {
+    if (theme === 1) {
       setTheme(2);
       setThemeValue("38%");
-
     } else if (theme === 2) {
       setTheme(3);
       setThemeValue("70%");
+    } else {
+      setTheme(1);
+      setThemeValue("8%");
+    }
+  };
 
-  } else {
-    setTheme(1);
-    setThemeValue("8%");
+  const addSimbol = (simbol : string) => {
+   if (value.slice(-1) !== " " && value.slice(-1)!== ".") {
+      setValue(value + simbol);
   }
 
 }
@@ -56,38 +74,54 @@ function App() {
               </div>
 
               <SwitcherContainer onClick={handleTheme}>
-                <Switcher  theme={themeValue} />
+                <Switcher theme={themeValue} />
               </SwitcherContainer>
             </Switch>
           </WrapperSwitch>
         </Header>
 
-        <Input></Input>
+        <Input>{value}</Input>
 
         <ButtonContainer>
-          <Button>7</Button>
-          <Button>8</Button>
-          <Button>9</Button>
-          <Button>DEL</Button>
-          <Button>4</Button>
-          <Button>5</Button>
-          <Button>6</Button>
-          <Button>+</Button>
+          <Button onClick={() => setValue(value + "7")}>7</Button>
+          <Button onClick={() => setValue(value + "8")}>8</Button>
+          <Button onClick={() => setValue(value + "9")}>9</Button>
+          <Button
+          color="var(--white)"
+          bg="var(--key-background-dark-blue)"
+          bdbox="var(--key-shadow-dark-blue)"
+          onClick={() => value.length >= 1 && deleteValue()}>
+            DEL
+          </Button>
+          <Button onClick={() => setValue(value + "4")}>4</Button>
+          <Button onClick={() => setValue(value + "5")}>5</Button>
+          <Button onClick={() => setValue(value + "6")}>6</Button>
 
-          <Button>1</Button>
-          <Button>2</Button>
-          <Button>3</Button>
-          <Button>-</Button>
-          <Button>.</Button>
-          <Button>0</Button>
-          <Button>/</Button>
-          <Button>X</Button>
+          <Button
+          onClick={() => value.length >= 1 && addSimbol("+")}
+          >+</Button>
+
+          <Button onClick={() => setValue(value + "1")}>1</Button>
+          <Button onClick={() => setValue(value + "2")}>2</Button>
+          <Button onClick={() => setValue(value + "3")}>3</Button>
+          <Button
+           onClick={() => value.length >= 1 && addSimbol("-")}
+          >-</Button>
+          <Button onClick={() => value.length >= 1 && addSimbol(".")}>.</Button>
+          <Button onClick={() => setValue(value + "0")}>0</Button>
+          <Button
+           onClick={() => value.length >= 1 && addSimbol("/")}
+          >/</Button>
+          <Button
+           onClick={() => value.length >= 1 && addSimbol("*")}
+          >X</Button>
 
           <Button
             gc="1/3"
             color="var(--white)"
             bg="var(--key-background-dark-blue)"
             bdbox="var(--key-shadow-dark-blue)"
+            onClick={() => setValue("")}
           >
             RESET
           </Button>
@@ -96,6 +130,7 @@ function App() {
             color={"var(--white)"}
             bg="var(--key-background-red)"
             bdbox="var(--key-shadow-dark-red)"
+            onClick={calc}
           >
             =
           </Button>
@@ -104,6 +139,5 @@ function App() {
     </>
   );
 }
-
 
 export default App;
