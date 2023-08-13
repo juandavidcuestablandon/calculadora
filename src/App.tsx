@@ -21,8 +21,8 @@ function App() {
   const [themeValue, setThemeValue] = useState("8%");
 
   const  calc = () => {
-    if (value.length >= 5 &&  value.slice(-1)  !== " ") {
-      setValue(eval(value).toString());
+    if (value.length >= 2  &&  value.slice(-1)  !== " ") {
+       setValue(eval(value).toString())
     }
   }
 

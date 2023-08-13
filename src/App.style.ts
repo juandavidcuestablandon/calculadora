@@ -1,10 +1,10 @@
-import styled   from "styled-components";
+import styled from "styled-components";
 
 
 type Props = {
     color? : string;
     bg? : string;
-    bdbox? : string;
+    bdbox? : string; 
     gc? : string;
 }
 
